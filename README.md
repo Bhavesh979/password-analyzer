@@ -18,8 +18,6 @@ HTML
 
 CSS
 
-JavaScript
-
 👨‍💻 Author
 
 Bhavesh Chaudhari
