@@ -19,17 +19,30 @@
 
 <h1>🔐 Password Strength Analyzer</h1>
 
-<p>Cybersecurity tool to analyze password strength</p>
+<p>Check how strong your password is</p>
+
+<input
+type="password"
+id="password"
+name="password"
+placeholder="Enter Password"
+>
+
+<button onclick="togglePassword()">Show</button>
 
 <form method="POST">
 
-<input type="password" name="password" id="password" placeholder="Enter Password" required>
+<input type="hidden" name="password" id="hiddenPassword">
 
-<button type="button" onclick="togglePassword()">Show</button>
-
-<button type="submit">Analyze Password</button>
+<button type="submit" onclick="copyPassword()">Analyze Password</button>
 
 </form>
+
+<h3>Password Strength: <span id="strength-text">---</span></h3>
+
+<div class="strength-bar">
+<div id="strength-bar"></div>
+</div>
 
 <div class="requirements">
 
@@ -47,20 +60,6 @@
 
 {% if strength %}
 
-<h3>Entered Password</h3>
-
-<p class="entered-password">{{ entered_password }}</p>
-
-<h2>Password Strength: {{ strength }}</h2>
-
-<div class="strength-bar">
-<div class="strength-fill score-{{score}}"></div>
-</div>
-
-<h3>Estimated Crack Time</h3>
-
-<p>{{ crack_time }}</p>
-
 <h3>Suggestions</h3>
 
 <ul>
@@ -73,7 +72,7 @@
 
 <p id="generated">{{ suggestion }}</p>
 
-<button onclick="copyPassword()">Copy Password</button>
+<button onclick="copyGenerated()">Copy Password</button>
 
 <button onclick="generatePassword()">Generate Password</button>
 
@@ -105,6 +104,13 @@ x.type="password";
 
 function copyPassword(){
 
+document.getElementById("hiddenPassword").value=
+document.getElementById("password").value;
+
+}
+
+function copyGenerated(){
+
 let text=document.getElementById("generated").innerText;
 
 navigator.clipboard.writeText(text);
@@ -129,6 +135,52 @@ document.getElementById("generated").innerText=password;
 
 }
 
+const passwordInput=document.getElementById("password");
+
+passwordInput.addEventListener("input",function(){
+
+let password=passwordInput.value;
+
+let score=0;
+
+if(password.length>=8){score++;}
+
+if(/[A-Z]/.test(password)){score++;}
+
+if(/[a-z]/.test(password)){score++;}
+
+if(/[0-9]/.test(password)){score++;}
+
+if(/[!@#$%^&*]/.test(password)){score++;}
+
+let text=document.getElementById("strength-text");
+let bar=document.getElementById("strength-bar");
+
+if(score<=2){
+
+text.innerText="Weak";
+bar.style.width="30%";
+bar.style.background="red";
+
+}
+
+else if(score<=4){
+
+text.innerText="Moderate";
+bar.style.width="65%";
+bar.style.background="orange";
+
+}
+
+else{
+
+text.innerText="Strong";
+bar.style.width="100%";
+bar.style.background="limegreen";
+
+}
+
+});
 
 var canvas=document.getElementById("matrix");
 
@@ -150,7 +202,7 @@ drops[x]=1;
 
 function draw(){
 
-ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillStyle="rgba(0,0,0,0.1)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 
 ctx.fillStyle="#0F0";
