@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Password Strength Analyzer</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
 <body>
 
 <div class="container">
@@ -6,21 +17,31 @@
 
 <h1>🔐 Password Strength Analyzer</h1>
 
-<p>Tool that analyzes password strength and suggests secure alternatives.</p>
+<p class="subtitle">
+Analyze password security and generate stronger passwords.
+</p>
 
 <form method="POST">
 
-<input type="password" id="password" name="password" placeholder="Enter Password" required>
+<div class="input-group">
 
-<button type="button" onclick="togglePassword()">Show</button>
+<input 
+type="password" 
+id="password" 
+name="password" 
+placeholder="Enter Password"
+required
+>
 
-<button type="submit">Analyze Password</button>
+<button type="button" onclick="togglePassword()">👁</button>
+
+</div>
+
+<button class="analyze-btn" type="submit">
+Analyze Password
+</button>
 
 </form>
-
-<div class="strength-container">
-<div id="strength-bar"></div>
-</div>
 
 {% if strength %}
 
@@ -29,19 +50,57 @@
 <h3>Suggestions</h3>
 
 <ul>
+
 {% for item in feedback %}
+
 <li>{{ item }}</li>
+
 {% endfor %}
+
 </ul>
 
 <h3>Suggested Strong Password</h3>
 
-<p>{{ suggestion }}</p>
+<div class="generated-box">
 
-<button onclick="copyPassword()">Copy Password</button>
+<p id="generated">{{ suggestion }}</p>
+
+<button onclick="copyPassword()">Copy</button>
+
+</div>
 
 {% endif %}
 
 </div>
 
 </div>
+
+<script>
+
+function togglePassword(){
+
+var x=document.getElementById("password");
+
+if(x.type==="password"){
+x.type="text";
+}else{
+x.type="password";
+}
+
+}
+
+function copyPassword(){
+
+let text=document.getElementById("generated").innerText;
+
+navigator.clipboard.writeText(text);
+
+alert("Password copied!");
+
+}
+
+</script>
+
+</body>
+
+</html>
