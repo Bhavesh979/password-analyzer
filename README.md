@@ -1,19 +1,21 @@
-# 🔐 Password Strength Analyzer
+🔐 Password Strength Analyzer
 
-🚀 **Project built for the Google Tools Hackathon**
+🚀 Project built for the Google Tools Hackathon
 
-Password Strength Analyzer is a cybersecurity web application that analyzes password security and helps users create stronger passwords. The system checks common password security rules and classifies passwords as **Weak, Moderate, or Strong**.
+Password Strength Analyzer is a cybersecurity web application that analyzes password security and helps users create stronger passwords. The system checks common password security rules and classifies passwords as Weak, Moderate, or Strong.
 
-The tool also generates secure passwords and stores password analysis data using **Firebase Firestore** for security analytics.
+The tool also generates secure passwords and stores password analysis data using Firebase Firestore for security analytics.
 
 ---
 
-## 🌐 Live Demo
+🌐 Live Demo
+
 🔗 https://password-analyzer-4kwd.onrender.com
 
 ---
 
-## ✨ Features
+✨ Features
+
 - 🔍 Password strength analysis
 - 🔑 Strong password generator
 - 💡 Security suggestions for weak passwords
@@ -23,40 +25,51 @@ The tool also generates secure passwords and stores password analysis data using
 
 ---
 
-## 🧠 How It Works
+🧠 How It Works
+
 1. User enters a password.
+
 2. The system analyzes the password based on:
+   
    - Minimum length (8 characters)
    - Uppercase letters
    - Lowercase letters
    - Numbers
    - Special characters
+
 3. A security score is calculated.
-4. The password is classified as **Weak, Moderate, or Strong**.
+
+4. The password is classified as Weak, Moderate, or Strong.
+
 5. Suggestions are shown to improve weak passwords.
-6. Password analysis data is stored in **Firebase Firestore**.
+
+6. Password analysis data is stored in Firebase Firestore.
 
 ---
 
-## ⚙️ Tech Stack
+⚙️ Tech Stack
 
-**Frontend**
+Frontend
+
 - HTML
 - CSS
 - JavaScript
 
-**Backend**
+Backend
+
 - Python
 - Flask
 
-**Cloud & Tools**
+Cloud & Tools
+
 - Firebase Firestore
 - Render (Deployment)
 - GitHub
 
 ---
 
-## 📂 Project Structure
+📂 Project Structure
+
 password-analyzer/
 │
 ├── app.py
@@ -73,36 +86,38 @@ password-analyzer/
 
 ---
 
-## 🚀 Installation
+🚀 Installation
 
-Clone the repository:
-git clone https://github.com/Bhavesh979/password-analyzer.git⁠�
-Copy code
+1️⃣ Clone the Repository
 
-Navigate into the project folder:
+git clone https://github.com/Bhavesh979/password-analyzer.git
+
+2️⃣ Navigate to the Project Folder
+
 cd password-analyzer
-Copy code
 
-Install dependencies:
+3️⃣ Install Dependencies
+
 pip install -r requirements.txt
-Copy code
 
-Run the application:
+4️⃣ Run the Application
+
 python app.py
-Copy code
 
-Open in your browser:
-http://127.0.0.1:5000⁠�
-Copy code
+5️⃣ Open in Your Browser
+
+http://127.0.0.1:5000
 
 ---
 
-## 🛡️ Cybersecurity Concept
-Weak passwords are one of the most common causes of security breaches.  
+🛡️ Cybersecurity Concept
+
+Weak passwords are one of the most common causes of security breaches.
 This project helps users understand password strength and encourages better password security practices.
 
 ---
 
-## 👨‍💻 Author
-**Nightmare**  
+👨‍💻 Author
+
+Nightmare
 Cybersecurity Project
