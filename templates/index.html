@@ -5,12 +5,71 @@
 
 <title>Password Strength Analyzer</title>
 
-<link rel="stylesheet" href="/static/style.css">
-
-<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
+<style>
+
+body{
+margin:0;
+font-family:Orbitron;
+background:black;
+color:white;
+text-align:center;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+.container{
+margin-top:100px;
+}
+
+.card{
+background:#0b132b;
+padding:40px;
+border-radius:12px;
+width:400px;
+margin:auto;
+box-shadow:0 0 20px #00f2ff;
+}
+
+input{
+padding:10px;
+width:60%;
+border-radius:6px;
+border:none;
+}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:6px;
+margin:5px;
+background:#00ff9c;
+cursor:pointer;
+}
+
+.strength-bar{
+height:10px;
+background:#333;
+margin-top:10px;
+border-radius:5px;
+}
+
+#strength-bar{
+height:10px;
+width:0%;
+border-radius:5px;
+}
+
+</style>
+
 <!-- Firebase -->
+
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
@@ -28,7 +87,7 @@
 
 <p>Check how strong your password is</p>
 
-<input type="password" id="password" placeholder="Enter Password">
+<input type="password" id="password">
 
 <button onclick="togglePassword()">Show</button>
 
@@ -39,46 +98,31 @@
 <h3>Password Strength: <span id="strength-text">---</span></h3>
 
 <div class="strength-bar">
-
 <div id="strength-bar"></div>
-
 </div>
 
 <h3>Suggestions</h3>
-
 <ul id="suggestions"></ul>
 
 <h3>Suggested Strong Password</h3>
-
 <p id="generated"></p>
 
-<button onclick="copyGenerated()">Copy Password</button>
-
+<button onclick="copyPassword()">Copy Password</button>
 <button onclick="generatePassword()">Generate Password</button>
 
 </div>
 
-<footer>
-
-<p>Created by Bhavesh Chaudhari • Cybersecurity Project</p>
-
-</footer>
-
 </div>
-
-<!-- Firebase Config -->
 
 <script>
 
 const firebaseConfig = {
-
 apiKey: "AIzaSyDVw4hG9i5mWnZ2v4yrRWIUxb_5xa1xyeU",
 authDomain: "password-analyzer-3fce2.firebaseapp.com",
 projectId: "password-analyzer-3fce2",
 storageBucket: "password-analyzer-3fce2.firebasestorage.app",
 messagingSenderId: "812083089882",
 appId: "1:812083089882:web:56c2bd945c38158ff028d7"
-
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -109,27 +153,26 @@ let score=0;
 
 let suggestions=[];
 
-if(password.length>=8){score++;}
-else{suggestions.push("Password must be at least 8 characters.");}
+if(password.length>=8){
+score++;
+}else{
+suggestions.push("Password must be at least 8 characters");
+}
 
 if(/[A-Z]/.test(password)){score++;}
-else{suggestions.push("Add uppercase letters.");}
-
-if(/[a-z]/.test(password)){score++;}
+else{suggestions.push("Add uppercase letters");}
 
 if(/[0-9]/.test(password)){score++;}
-else{suggestions.push("Add numbers.");}
+else{suggestions.push("Add numbers");}
 
 if(/[!@#$%^&*]/.test(password)){score++;}
-else{suggestions.push("Add special characters.");}
-
-let text=document.getElementById("strength-text");
-
-let bar=document.getElementById("strength-bar");
+else{suggestions.push("Add special characters");}
 
 let strength="Weak";
 
-if(score<=2){
+let bar=document.getElementById("strength-bar");
+
+if(score<=1){
 
 strength="Weak";
 bar.style.width="30%";
@@ -137,7 +180,7 @@ bar.style.background="red";
 
 }
 
-else if(score<=4){
+else if(score<=3){
 
 strength="Moderate";
 bar.style.width="65%";
@@ -153,18 +196,15 @@ bar.style.background="limegreen";
 
 }
 
-text.innerText=strength;
+document.getElementById("strength-text").innerText=strength;
 
 let list=document.getElementById("suggestions");
-
 list.innerHTML="";
 
-suggestions.forEach(item=>{
-
+suggestions.forEach(s=>{
 let li=document.createElement("li");
-li.innerText=item;
+li.innerText=s;
 list.appendChild(li);
-
 });
 
 saveToFirebase(strength,password.length);
@@ -175,9 +215,9 @@ function saveToFirebase(strength,length){
 
 db.collection("password_analysis").add({
 
-Strength: strength,
-Length: length,
-Time: new Date().toLocaleString()
+strength:strength,
+length:length,
+time:new Date().toLocaleString()
 
 });
 
@@ -187,25 +227,25 @@ function generatePassword(){
 
 let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
 
-let password="";
+let pass="";
 
 for(let i=0;i<12;i++){
 
-password+=chars.charAt(Math.floor(Math.random()*chars.length));
+pass+=chars.charAt(Math.floor(Math.random()*chars.length));
 
 }
 
-document.getElementById("generated").innerText=password;
+document.getElementById("generated").innerText=pass;
 
 }
 
-function copyGenerated(){
+function copyPassword(){
 
 let text=document.getElementById("generated").innerText;
 
 navigator.clipboard.writeText(text);
 
-alert("Password copied!");
+alert("Password copied");
 
 }
 
@@ -214,7 +254,6 @@ alert("Password copied!");
 <script>
 
 var canvas=document.getElementById("matrix");
-
 var ctx=canvas.getContext("2d");
 
 canvas.height=window.innerHeight;
@@ -259,5 +298,4 @@ setInterval(draw,33);
 </script>
 
 </body>
-
 </html>
