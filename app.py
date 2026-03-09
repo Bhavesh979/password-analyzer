@@ -10,19 +10,13 @@ def home():
     strength=None
     feedback=[]
     suggestion=None
-    crack_time=None
     score=0
-    entered_password=None
 
     if request.method=="POST":
 
         password=request.form["password"]
 
-        entered_password=password
-
         strength,feedback,score=analyzer.check_password_strength(password)
-
-        crack_time=analyzer.estimate_crack_time(score)
 
         suggestion=analyzer.generate_strong_password()
 
@@ -31,11 +25,11 @@ def home():
         strength=strength,
         feedback=feedback,
         suggestion=suggestion,
-        crack_time=crack_time,
-        score=score,
-        entered_password=entered_password
+        score=score
     )
 
 if __name__=="__main__":
+
     port=int(os.environ.get("PORT",10000))
+
     app.run(host="0.0.0.0",port=port)
