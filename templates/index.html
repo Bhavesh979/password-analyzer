@@ -40,11 +40,12 @@
 <div id="strength-bar"></div>
 </div>
 
-<h3>Suggestions</h3>
+<div id="suggestion-section">
 
+<h3>Suggestions</h3>
 <ul id="suggestions"></ul>
 
-<h3>Suggested Strong Password</h3>
+<h3 id="suggested-title">Suggested Strong Password</h3>
 
 <p id="generated"></p>
 
@@ -54,23 +55,26 @@
 
 </div>
 
+</div>
+
 <footer>
-
-<p>Created by Bhavesh Chaudhari • Cybersecurity Project</p>
-
+<p>Created by Nightmare • Cybersecurity Project</p>
 </footer>
 
 </div>
 
+
 <script>
 
 const firebaseConfig = {
+
 apiKey: "AIzaSyDVw4hG9i5mWnZ2v4yrRWIUxb_5xa1xyeU",
 authDomain: "password-analyzer-3fce2.firebaseapp.com",
 projectId: "password-analyzer-3fce2",
 storageBucket: "password-analyzer-3fce2.firebasestorage.app",
 messagingSenderId: "812083089882",
 appId: "1:812083089882:web:56c2bd945c38158ff028d7"
+
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -78,6 +82,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 </script>
+
 
 <script>
 
@@ -92,6 +97,7 @@ x.type="password";
 }
 
 }
+
 
 function analyzePassword(){
 
@@ -120,11 +126,10 @@ else{suggestions.push("Add numbers.");}
 if(hasSpecial){score++;}
 else{suggestions.push("Add special characters.");}
 
-let text=document.getElementById("strength-text");
-
-let bar=document.getElementById("strength-bar");
-
 let strength="Weak";
+
+let text=document.getElementById("strength-text");
+let bar=document.getElementById("strength-bar");
 
 if(score<=2){
 
@@ -152,6 +157,7 @@ bar.style.background="limegreen";
 
 text.innerText=strength;
 
+
 let list=document.getElementById("suggestions");
 
 list.innerHTML="";
@@ -159,16 +165,34 @@ list.innerHTML="";
 suggestions.forEach(item=>{
 
 let li=document.createElement("li");
-
 li.innerText=item;
-
 list.appendChild(li);
 
 });
 
+
+let section=document.getElementById("suggestion-section");
+
+
+if(strength==="Strong"){
+
+section.style.display="none";
+
+}
+else{
+
+section.style.display="block";
+
+generatePassword();
+
+}
+
+
 saveToFirebase(strength,password.length,score,hasUpper,hasNumber,hasSpecial);
 
 }
+
+
 
 function saveToFirebase(strength,length,score,hasUpper,hasNumber,hasSpecial){
 
@@ -182,12 +206,13 @@ Numbers: hasNumber,
 SpecialChar: hasSpecial,
 Time: new Date().toLocaleString(),
 Device: navigator.userAgent,
-Platform: navigator.platform,
-Browser: navigator.appName
+Platform: navigator.platform
 
 });
 
 }
+
+
 
 function generatePassword(){
 
@@ -205,9 +230,16 @@ document.getElementById("generated").innerText=password;
 
 }
 
+
+
 function copyGenerated(){
 
 let text=document.getElementById("generated").innerText;
+
+if(text===""){
+alert("No password generated");
+return;
+}
 
 navigator.clipboard.writeText(text);
 
@@ -216,6 +248,7 @@ alert("Password copied!");
 }
 
 </script>
+
 
 <script>
 
@@ -263,6 +296,7 @@ drops[i]++;
 setInterval(draw,33);
 
 </script>
+
 
 </body>
 
