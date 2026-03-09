@@ -25,6 +25,7 @@
 type="password"
 id="password"
 name="password"
+value="{{ password }}"
 placeholder="Enter Password"
 >
 
@@ -38,13 +39,13 @@ placeholder="Enter Password"
 
 </form>
 
-<h3>Password Strength: <span id="strength-text">---</span></h3>
+<h3>Password Strength: <span id="strength-text">{{ strength if strength else '---' }}</span></h3>
 
 <div class="strength-bar">
 <div id="strength-bar"></div>
 </div>
 
-{% if strength %}
+{% if strength and strength != "Strong" %}
 
 <h3>Suggestions</h3>
 
@@ -67,7 +68,9 @@ placeholder="Enter Password"
 </div>
 
 <footer>
+
 <p>Created by Bhavesh Chaudhari • Cybersecurity Project</p>
+
 </footer>
 
 </div>
@@ -171,6 +174,7 @@ canvas.width=window.innerWidth;
 var letters="01".split("");
 
 var fontSize=12;
+
 var columns=canvas.width/fontSize;
 
 var drops=[];
