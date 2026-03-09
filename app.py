@@ -10,13 +10,12 @@ def home():
     strength = None
     feedback = []
     suggestion = None
-    entropy = None
 
     if request.method == "POST":
 
         password = request.form["password"]
 
-        strength, feedback, entropy = analyzer.check_password_strength(password)
+        strength, feedback = analyzer.check_password_strength(password)
 
         suggestion = analyzer.generate_strong_password()
 
@@ -24,8 +23,7 @@ def home():
         "index.html",
         strength=strength,
         feedback=feedback,
-        suggestion=suggestion,
-        entropy=entropy
+        suggestion=suggestion
     )
 
 
