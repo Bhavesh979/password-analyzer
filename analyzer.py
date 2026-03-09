@@ -2,7 +2,6 @@ import re
 import random
 import string
 
-
 def check_password_strength(password):
 
     score=0
