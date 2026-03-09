@@ -3,26 +3,30 @@ import analyzer
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET","POST"])
 def home():
 
-    strength = None
-    feedback = []
-    suggestion = None
+    strength=None
+    feedback=[]
+    suggestion=None
+    entropy=None
 
-    if request.method == "POST":
+    if request.method=="POST":
 
-        password = request.form["password"]
+        password=request.form["password"]
 
-        strength, feedback = analyzer.check_password_strength(password)
-        suggestion = analyzer.generate_strong_password()
+        strength,feedback,entropy=analyzer.check_password_strength(password)
+
+        suggestion=analyzer.generate_strong_password()
 
     return render_template(
         "index.html",
         strength=strength,
         feedback=feedback,
-        suggestion=suggestion
+        suggestion=suggestion,
+        entropy=entropy
     )
 
-if __name__ == "__main__":
+
+if __name__=="__main__":
     app.run(debug=True)
