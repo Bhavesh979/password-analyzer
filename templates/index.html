@@ -23,13 +23,7 @@
 
 <form method="POST">
 
-<input
-type="password"
-name="password"
-id="password"
-placeholder="Enter Password"
-required
->
+<input type="password" name="password" id="password" placeholder="Enter Password" required>
 
 <button type="button" onclick="togglePassword()">Show</button>
 
@@ -41,16 +35,20 @@ required
 
 <h2>Password Strength: {{ strength }}</h2>
 
+<div class="strength-bar">
+<div class="strength-fill score-{{score}}"></div>
+</div>
+
+<h3>Estimated Crack Time</h3>
+
+<p>{{ crack_time }}</p>
+
 <h3>Suggestions</h3>
 
 <ul>
-
 {% for item in feedback %}
-
 <li>{{ item }}</li>
-
 {% endfor %}
-
 </ul>
 
 <h3>Suggested Strong Password</h3>
@@ -59,12 +57,13 @@ required
 
 <button onclick="copyPassword()">Copy Password</button>
 
+<button onclick="generatePassword()">Generate New</button>
+
 {% endif %}
 
 </div>
 
 </div>
-
 
 <script>
 
@@ -90,7 +89,9 @@ alert("Password copied!");
 
 }
 
-
+function generatePassword(){
+location.reload()
+}
 
 var canvas=document.getElementById("matrix");
 
