@@ -48,18 +48,6 @@ Deployment
 
 Render
 
-📂 Project Structure
-password-analyzer
-│
-├── app.py
-├── analyzer.py
-├── requirements.txt
-│
-├── templates
-│   └── index.html
-│
-└── static
-    └── style.css
 ⚙️ How It Works
 
 User enters a password.
