@@ -39,7 +39,7 @@ placeholder="Enter Password"
 
 </form>
 
-<h3>Password Strength: <span id="strength-text">{{ strength if strength else '---' }}</span></h3>
+<h3>Password Strength: <span id="strength-text">{{ strength if strength else "---" }}</span></h3>
 
 <div class="strength-bar">
 <div id="strength-bar"></div>
@@ -165,7 +165,43 @@ bar.style.background="limegreen";
 
 });
 
+
+/* FIX: restore strength bar after Flask reload */
+
+window.onload=function(){
+
+let strength="{{ strength }}";
+
+let bar=document.getElementById("strength-bar");
+
+if(strength==="Weak"){
+
+bar.style.width="30%";
+bar.style.background="red";
+
+}
+
+else if(strength==="Moderate"){
+
+bar.style.width="65%";
+bar.style.background="orange";
+
+}
+
+else if(strength==="Strong"){
+
+bar.style.width="100%";
+bar.style.background="limegreen";
+
+}
+
+};
+
+
+/* Matrix animation */
+
 var canvas=document.getElementById("matrix");
+
 var ctx=canvas.getContext("2d");
 
 canvas.height=window.innerHeight;
