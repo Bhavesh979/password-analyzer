@@ -31,7 +31,25 @@
 
 </form>
 
+<div class="requirements">
+
+<h3>Password Requirements</h3>
+
+<ul>
+<li>✔ At least 8 characters</li>
+<li>✔ Uppercase letter</li>
+<li>✔ Lowercase letter</li>
+<li>✔ Number</li>
+<li>✔ Special character</li>
+</ul>
+
+</div>
+
 {% if strength %}
+
+<h3>Entered Password</h3>
+
+<p class="entered-password">{{ entered_password }}</p>
 
 <h2>Password Strength: {{ strength }}</h2>
 
@@ -57,11 +75,17 @@
 
 <button onclick="copyPassword()">Copy Password</button>
 
-<button onclick="generatePassword()">Generate New</button>
+<button onclick="generatePassword()">Generate Password</button>
 
 {% endif %}
 
 </div>
+
+<footer>
+
+<p>Created by Bhavesh Chaudhari • Cybersecurity Project</p>
+
+</footer>
 
 </div>
 
@@ -90,8 +114,21 @@ alert("Password copied!");
 }
 
 function generatePassword(){
-location.reload()
+
+let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+
+let password="";
+
+for(let i=0;i<12;i++){
+
+password+=chars.charAt(Math.floor(Math.random()*chars.length));
+
 }
+
+document.getElementById("generated").innerText=password;
+
+}
+
 
 var canvas=document.getElementById("matrix");
 
