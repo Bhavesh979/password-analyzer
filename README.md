@@ -1,6 +1,6 @@
 # 🔐 Password Strength Analyzer
 
-Built for **Google Tools Hackathon 🚀**
+🚀 **Project built for the Google Tools Hackathon**
 
 A cybersecurity web application that checks password strength and helps users create more secure passwords.
 
