@@ -1,24 +1,27 @@
-🔐 Password Strength Analyzer
+# 🔐 Password Strength Analyzer
 
-A cybersecurity web application that checks the strength of a password and helps users create more secure passwords.
+Built for **Google Tools Hackathon 🚀**
 
-The tool analyzes passwords based on length, uppercase letters, lowercase letters, numbers, and special characters, and classifies them as Weak, Moderate, or Strong. It also provides suggestions and generates strong passwords when needed.
+A cybersecurity web application that checks password strength and helps users create more secure passwords.
 
-🚀 Live Demo
+The tool analyzes passwords based on **length, uppercase letters, lowercase letters, numbers, and special characters**, and classifies them as **Weak, Moderate, or Strong**. It also provides suggestions and generates strong passwords when needed.
 
+---
+
+## 🚀 Live Demo
 🔗 https://password-analyzer-4kwd.onrender.com
 
-🛠 Tech Stack
+---
 
-Python
+## 🛠 Tech Stack
+- Python
+- Flask
+- HTML
+- CSS
+- JavaScript
 
-Flask
+---
 
-HTML
-
-CSS
-
-👨‍💻 Author
-
-Bhavesh Chaudhari
+## 👨‍💻 Author
+**Bhavesh Chaudhari**  
 Cybersecurity Project
