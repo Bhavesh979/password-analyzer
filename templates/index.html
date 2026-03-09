@@ -7,6 +7,9 @@
 
 <link rel="stylesheet" href="/static/style.css">
 
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -165,9 +168,6 @@ bar.style.background="limegreen";
 
 });
 
-
-/* FIX: restore strength bar after Flask reload */
-
 window.onload=function(){
 
 let strength="{{ strength }}";
@@ -196,9 +196,6 @@ bar.style.background="limegreen";
 }
 
 };
-
-
-/* Matrix animation */
 
 var canvas=document.getElementById("matrix");
 
