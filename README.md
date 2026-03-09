@@ -68,8 +68,9 @@ Cloud & Tools
 
 ---
 
-📂 Project Structure
+## 📂 Project Structure
 
+```
 password-analyzer/
 │
 ├── app.py
@@ -83,6 +84,8 @@ password-analyzer/
 │   └── style.css
 │
 └── README.md
+```
+
 
 ---
 
