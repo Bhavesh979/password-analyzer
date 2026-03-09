@@ -24,7 +24,7 @@
 
 <h1>🔐 Password Strength Analyzer</h1>
 
-<p>Check how strong your password is</p>
+<p>AI-Powered Password Security Analysis</p>
 
 <input type="password" id="password" placeholder="Enter Password">
 
@@ -34,15 +34,22 @@
 
 <button onclick="analyzePassword()">Analyze Password</button>
 
+
+<!-- RESULT SECTION (Hidden First) -->
+
+<div id="result-section" style="display:none;">
+
 <h3>Password Strength: <span id="strength-text">---</span></h3>
 
 <div class="strength-bar">
 <div id="strength-bar"></div>
 </div>
 
+
 <div id="suggestion-section">
 
 <h3>Suggestions</h3>
+
 <ul id="suggestions"></ul>
 
 <h3 id="suggested-title">Suggested Strong Password</h3>
@@ -57,11 +64,17 @@
 
 </div>
 
+</div>
+
+
 <footer>
+
 <p>Created by Nightmare • Cybersecurity Project</p>
+
 </footer>
 
 </div>
+
 
 
 <script>
@@ -84,6 +97,7 @@ const db = firebase.firestore();
 </script>
 
 
+
 <script>
 
 function togglePassword(){
@@ -99,7 +113,10 @@ x.type="password";
 }
 
 
+
 function analyzePassword(){
+
+document.getElementById("result-section").style.display="block";
 
 let password=document.getElementById("password").value;
 
@@ -125,6 +142,8 @@ else{suggestions.push("Add numbers.");}
 
 if(hasSpecial){score++;}
 else{suggestions.push("Add special characters.");}
+
+
 
 let strength="Weak";
 
@@ -155,11 +174,11 @@ bar.style.background="limegreen";
 
 }
 
+
+
 text.innerText=strength;
 
-
 let list=document.getElementById("suggestions");
-
 list.innerHTML="";
 
 suggestions.forEach(item=>{
@@ -171,14 +190,15 @@ list.appendChild(li);
 });
 
 
-let section=document.getElementById("suggestion-section");
 
+let section=document.getElementById("suggestion-section");
 
 if(strength==="Strong"){
 
 section.style.display="none";
 
 }
+
 else{
 
 section.style.display="block";
@@ -186,6 +206,7 @@ section.style.display="block";
 generatePassword();
 
 }
+
 
 
 saveToFirebase(strength,password.length,score,hasUpper,hasNumber,hasSpecial);
@@ -250,10 +271,10 @@ alert("Password copied!");
 </script>
 
 
+
 <script>
 
 var canvas=document.getElementById("matrix");
-
 var ctx=canvas.getContext("2d");
 
 canvas.height=window.innerHeight;
@@ -297,7 +318,5 @@ setInterval(draw,33);
 
 </script>
 
-
 </body>
-
 </html>
