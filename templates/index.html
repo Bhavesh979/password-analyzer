@@ -10,7 +10,7 @@
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
-<!-- Firebase SDK -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
@@ -28,35 +28,40 @@
 
 <p>Check how strong your password is</p>
 
-<input
-type="password"
-id="password"
-placeholder="Enter Password"
->
+<input type="password" id="password" placeholder="Enter Password">
 
 <button onclick="togglePassword()">Show</button>
+
+<br><br>
 
 <button onclick="analyzePassword()">Analyze Password</button>
 
 <h3>Password Strength: <span id="strength-text">---</span></h3>
 
 <div class="strength-bar">
+
 <div id="strength-bar"></div>
+
 </div>
 
 <h3>Suggestions</h3>
+
 <ul id="suggestions"></ul>
 
 <h3>Suggested Strong Password</h3>
+
 <p id="generated"></p>
 
 <button onclick="copyGenerated()">Copy Password</button>
+
 <button onclick="generatePassword()">Generate Password</button>
 
 </div>
 
 <footer>
+
 <p>Created by Bhavesh Chaudhari • Cybersecurity Project</p>
+
 </footer>
 
 </div>
@@ -66,12 +71,14 @@ placeholder="Enter Password"
 <script>
 
 const firebaseConfig = {
-apiKey: "YOUR_API_KEY",
-authDomain: "YOUR_PROJECT.firebaseapp.com",
-projectId: "YOUR_PROJECT_ID",
-storageBucket: "YOUR_PROJECT.appspot.com",
-messagingSenderId: "YOUR_ID",
-appId: "YOUR_APP_ID"
+
+apiKey: "AIzaSyDVw4hG9i5mWnZ2v4yrRWIUxb_5xa1xyeU",
+authDomain: "password-analyzer-3fce2.firebaseapp.com",
+projectId: "password-analyzer-3fce2",
+storageBucket: "password-analyzer-3fce2.firebasestorage.app",
+messagingSenderId: "812083089882",
+appId: "1:812083089882:web:56c2bd945c38158ff028d7"
+
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -99,46 +106,30 @@ function analyzePassword(){
 let password=document.getElementById("password").value;
 
 let score=0;
+
 let suggestions=[];
 
-const uppercase=/[A-Z]/.test(password);
-const lowercase=/[a-z]/.test(password);
-const numbers=/[0-9]/.test(password);
-const special=/[!@#$%^&*(),.?":{}|<>]/.test(password);
+if(password.length>=8){score++;}
+else{suggestions.push("Password must be at least 8 characters.");}
 
-if(password.length>=8){
-score+=20;
-}else{
-suggestions.push("Password must be at least 8 characters.");
-}
+if(/[A-Z]/.test(password)){score++;}
+else{suggestions.push("Add uppercase letters.");}
 
-if(uppercase){
-score+=20;
-}else{
-suggestions.push("Add uppercase letters.");
-}
+if(/[a-z]/.test(password)){score++;}
 
-if(lowercase){
-score+=20;
-}
+if(/[0-9]/.test(password)){score++;}
+else{suggestions.push("Add numbers.");}
 
-if(numbers){
-score+=20;
-}else{
-suggestions.push("Add numbers.");
-}
+if(/[!@#$%^&*]/.test(password)){score++;}
+else{suggestions.push("Add special characters.");}
 
-if(special){
-score+=20;
-}else{
-suggestions.push("Add special characters.");
-}
-
-let strength="Weak";
+let text=document.getElementById("strength-text");
 
 let bar=document.getElementById("strength-bar");
 
-if(score<=40){
+let strength="Weak";
+
+if(score<=2){
 
 strength="Weak";
 bar.style.width="30%";
@@ -146,7 +137,7 @@ bar.style.background="red";
 
 }
 
-else if(score<=80){
+else if(score<=4){
 
 strength="Moderate";
 bar.style.width="65%";
@@ -162,39 +153,30 @@ bar.style.background="limegreen";
 
 }
 
-document.getElementById("strength-text").innerText=strength;
+text.innerText=strength;
 
 let list=document.getElementById("suggestions");
+
 list.innerHTML="";
 
 suggestions.forEach(item=>{
+
 let li=document.createElement("li");
 li.innerText=item;
 list.appendChild(li);
+
 });
 
-saveAnalysis(password,strength,score,uppercase,lowercase,numbers,special);
+saveToFirebase(strength,password.length);
 
 }
 
-async function saveAnalysis(password,strength,score,uppercase,lowercase,numbers,special){
+function saveToFirebase(strength,length){
 
-let suggestion="Strong password";
+db.collection("password_analysis").add({
 
-if(!special) suggestion="Add special characters";
-else if(!numbers) suggestion="Add numbers";
-else if(!uppercase) suggestion="Add uppercase letters";
-
-await db.collection("password_analysis").add({
-
-Length: password.length,
 Strength: strength,
-Uppercase: uppercase,
-Lowercase: lowercase,
-Numbers: numbers,
-SpecialCharacters: special,
-Score: score,
-Suggestion: suggestion,
+Length: length,
 Time: new Date().toLocaleString()
 
 });
@@ -277,4 +259,5 @@ setInterval(draw,33);
 </script>
 
 </body>
+
 </html>
