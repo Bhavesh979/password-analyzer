@@ -18,7 +18,6 @@ The tool analyzes passwords based on **length, uppercase letters, lowercase lett
 - Flask
 - HTML
 - CSS
-- JavaScript
 
 ---
 
