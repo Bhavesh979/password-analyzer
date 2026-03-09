@@ -11,6 +11,7 @@ def home():
     feedback=[]
     suggestion=None
     score=0
+    password=""   # keep password value
 
     if request.method=="POST":
 
@@ -18,14 +19,17 @@ def home():
 
         strength,feedback,score=analyzer.check_password_strength(password)
 
-        suggestion=analyzer.generate_strong_password()
+        # Only show suggestion if password is not strong
+        if strength != "Strong":
+            suggestion=analyzer.generate_strong_password()
 
     return render_template(
         "index.html",
         strength=strength,
         feedback=feedback,
         suggestion=suggestion,
-        score=score
+        score=score,
+        password=password
     )
 
 if __name__=="__main__":
