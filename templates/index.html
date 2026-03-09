@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Password Strength Analyzer</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<h1>Password Strength Analyzer 🔐</h1>
+
+<p>Tool that analyzes password strength and suggests secure alternatives.</p>
+
+<form method="POST">
+
+<input type="password" id="password" name="password" placeholder="Enter Password" required>
+
+<button type="button" onclick="togglePassword()">Show</button>
+
+<button type="submit">Analyze Password</button>
+
+</form>
+
+{% if strength %}
+
+<h2>Password Strength: {{ strength }}</h2>
+
+<div class="strength-bar">
+<div class="strength {{ strength }}"></div>
+</div>
+
+{% endif %}
+
+{% if feedback %}
+
+<h3>Suggestions:</h3>
+
+<ul>
+{% for tip in feedback %}
+<li>{{ tip }}</li>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+{% if suggestion %}
+
+<h3>Suggested Strong Password:</h3>
+<p>{{ suggestion }}</p>
+
+{% endif %}
+
+<script>
+
+function togglePassword(){
+
+let p = document.getElementById("password");
+
+if(p.type === "password"){
+p.type = "text";
+}else{
+p.type = "password";
+}
+
+}
+
+</script>
+
+</body>
+
+</html>
