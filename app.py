@@ -12,10 +12,13 @@ def home():
     suggestion=None
     crack_time=None
     score=0
+    entered_password=None
 
     if request.method=="POST":
 
         password=request.form["password"]
+
+        entered_password=password
 
         strength,feedback,score=analyzer.check_password_strength(password)
 
@@ -29,7 +32,8 @@ def home():
         feedback=feedback,
         suggestion=suggestion,
         crack_time=crack_time,
-        score=score
+        score=score,
+        entered_password=entered_password
     )
 
 if __name__=="__main__":
