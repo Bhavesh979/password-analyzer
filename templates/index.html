@@ -29,7 +29,6 @@ name="password"
 id="password"
 placeholder="Enter Password"
 required
-onkeyup="liveStrength()"
 >
 
 <button type="button" onclick="togglePassword()">Show</button>
@@ -38,13 +37,9 @@ onkeyup="liveStrength()"
 
 </form>
 
-<div id="live-strength"></div>
-
 {% if strength %}
 
 <h2>Password Strength: {{ strength }}</h2>
-
-<p>Entropy: {{ entropy }} bits</p>
 
 <h3>Suggestions</h3>
 
@@ -62,13 +57,14 @@ onkeyup="liveStrength()"
 
 <p id="generated">{{ suggestion }}</p>
 
-<button onclick="copyPassword()">Copy</button>
+<button onclick="copyPassword()">Copy Password</button>
 
 {% endif %}
 
 </div>
 
 </div>
+
 
 <script>
 
@@ -90,40 +86,22 @@ let text=document.getElementById("generated").innerText;
 
 navigator.clipboard.writeText(text);
 
-alert("Password copied");
-
-}
-
-function liveStrength(){
-
-var password=document.getElementById("password").value;
-
-var strength="Weak";
-
-if(password.length>8) strength="Moderate";
-
-if(password.length>12) strength="Strong";
-
-document.getElementById("live-strength").innerHTML="Live Strength: "+strength;
+alert("Password copied!");
 
 }
 
 
-// MATRIX BACKGROUND
 
 var canvas=document.getElementById("matrix");
 
 var ctx=canvas.getContext("2d");
 
 canvas.height=window.innerHeight;
-
 canvas.width=window.innerWidth;
 
-var letters="01";
+var letters="01".split("");
 
-letters=letters.split("");
-
-var fontSize=10;
+var fontSize=12;
 
 var columns=canvas.width/fontSize;
 
