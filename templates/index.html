@@ -7,6 +7,15 @@
 
 <link rel="stylesheet" href="/static/style.css">
 
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HXDMLFHDP7"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-HXDMLFHDP7');
+</script>
+
 </head>
 
 <body>
@@ -67,9 +76,7 @@ placeholder="Enter Password"
 </div>
 
 <footer>
-
 <p>Created by Bhavesh Chaudhari • Cybersecurity Project</p>
-
 </footer>
 
 </div>
@@ -130,13 +137,9 @@ let password=passwordInput.value;
 let score=0;
 
 if(password.length>=8){score++;}
-
 if(/[A-Z]/.test(password)){score++;}
-
 if(/[a-z]/.test(password)){score++;}
-
 if(/[0-9]/.test(password)){score++;}
-
 if(/[!@#$%^&*]/.test(password)){score++;}
 
 let text=document.getElementById("strength-text");
@@ -169,7 +172,6 @@ bar.style.background="limegreen";
 });
 
 var canvas=document.getElementById("matrix");
-
 var ctx=canvas.getContext("2d");
 
 canvas.height=window.innerHeight;
@@ -178,7 +180,6 @@ canvas.width=window.innerWidth;
 var letters="01".split("");
 
 var fontSize=12;
-
 var columns=canvas.width/fontSize;
 
 var drops=[];
