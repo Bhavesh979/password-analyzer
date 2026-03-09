@@ -2,51 +2,46 @@
 <html>
 
 <head>
-<title>Password Strength Analyzer</title>
-<link rel="stylesheet" href="/static/style.css">
+    <title>Password Strength Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
 
-<h1>Password Strength Analyzer 🔐</h1>
+<h1>🔐 Password Strength Analyzer</h1>
+<p>Check how strong your password is</p>
 
-<p>Tool that analyzes password strength and suggests secure alternatives.</p>
+<input type="password" id="password" placeholder="Enter Password" onkeyup="checkStrength()">
+
+<button onclick="togglePassword()">Show</button>
 
 <form method="POST">
-
-<input type="password" id="password" name="password" placeholder="Enter Password" required>
-
-<button type="button" onclick="togglePassword()">Show</button>
-
-<button type="submit">Analyze Password</button>
-
+<input type="hidden" name="password" id="hiddenPassword">
+<button type="submit" onclick="copyPassword()">Analyze Password</button>
 </form>
+
+<div class="strength-container">
+<div id="strength-bar"></div>
+</div>
+
+<p id="strength-text"></p>
+<p id="entropy"></p>
+<p id="crack-time"></p>
 
 {% if strength %}
 
 <h2>Password Strength: {{ strength }}</h2>
 
-<div class="strength-bar">
-<div class="strength {{ strength }}"></div>
-</div>
-
-{% endif %}
-
-{% if feedback %}
-
-<h3>Suggestions:</h3>
+<h3>Suggestions</h3>
 
 <ul>
-{% for tip in feedback %}
-<li>{{ tip }}</li>
+{% for item in feedback %}
+<li>{{ item }}</li>
 {% endfor %}
 </ul>
 
-{% endif %}
+<h3>Suggested Strong Password</h3>
 
-{% if suggestion %}
-
-<h3>Suggested Strong Password:</h3>
 <p>{{ suggestion }}</p>
 
 {% endif %}
@@ -55,12 +50,88 @@
 
 function togglePassword(){
 
-let p = document.getElementById("password");
+var x = document.getElementById("password");
 
-if(p.type === "password"){
-p.type = "text";
+if(x.type === "password"){
+x.type = "text";
 }else{
-p.type = "password";
+x.type = "password";
+}
+
+}
+
+function copyPassword(){
+
+document.getElementById("hiddenPassword").value =
+document.getElementById("password").value;
+
+}
+
+function checkStrength(){
+
+let password = document.getElementById("password").value;
+
+let bar = document.getElementById("strength-bar");
+
+let text = document.getElementById("strength-text");
+
+let entropy = document.getElementById("entropy");
+
+let crack = document.getElementById("crack-time");
+
+let strength = 0;
+
+if(password.length >= 8) strength += 25;
+if(/[A-Z]/.test(password)) strength += 25;
+if(/[0-9]/.test(password)) strength += 25;
+if(/[^A-Za-z0-9]/.test(password)) strength += 25;
+
+bar.style.width = strength + "%";
+
+if(strength <= 25){
+text.innerText = "Weak Password";
+bar.style.background = "red";
+}
+else if(strength <= 50){
+text.innerText = "Moderate Password";
+bar.style.background = "orange";
+}
+else if(strength <= 75){
+text.innerText = "Strong Password";
+bar.style.background = "yellow";
+}
+else{
+text.innerText = "Very Strong Password";
+bar.style.background = "green";
+}
+
+let charset = 0;
+
+if(/[a-z]/.test(password)) charset += 26;
+if(/[A-Z]/.test(password)) charset += 26;
+if(/[0-9]/.test(password)) charset += 10;
+if(/[^A-Za-z0-9]/.test(password)) charset += 32;
+
+let entropyValue = password.length * Math.log2(charset || 1);
+
+entropy.innerText = "Password Entropy: " + entropyValue.toFixed(2) + " bits";
+
+let guesses = Math.pow(charset, password.length);
+
+let guessesPerSecond = 1000000000;
+
+let seconds = guesses / guessesPerSecond;
+
+let years = seconds / (60*60*24*365);
+
+if(years < 1){
+crack.innerText = "Estimated crack time: seconds/minutes";
+}
+else if(years < 100){
+crack.innerText = "Estimated crack time: " + years.toFixed(2) + " years";
+}
+else{
+crack.innerText = "Estimated crack time: centuries";
 }
 
 }
@@ -68,5 +139,4 @@ p.type = "password";
 </script>
 
 </body>
-
 </html>
