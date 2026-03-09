@@ -11,41 +11,40 @@
 
 <body>
 
+<canvas id="matrix"></canvas>
+
 <div class="container">
 
 <div class="card">
 
 <h1>🔐 Password Strength Analyzer</h1>
 
-<p class="subtitle">
-Analyze password security and generate stronger passwords.
-</p>
+<p>Cybersecurity tool to analyze password strength</p>
 
 <form method="POST">
 
-<div class="input-group">
-
-<input 
-type="password" 
-id="password" 
-name="password" 
+<input
+type="password"
+name="password"
+id="password"
 placeholder="Enter Password"
 required
+onkeyup="liveStrength()"
 >
 
-<button type="button" onclick="togglePassword()">👁</button>
+<button type="button" onclick="togglePassword()">Show</button>
 
-</div>
-
-<button class="analyze-btn" type="submit">
-Analyze Password
-</button>
+<button type="submit">Analyze Password</button>
 
 </form>
+
+<div id="live-strength"></div>
 
 {% if strength %}
 
 <h2>Password Strength: {{ strength }}</h2>
+
+<p>Entropy: {{ entropy }} bits</p>
 
 <h3>Suggestions</h3>
 
@@ -61,13 +60,9 @@ Analyze Password
 
 <h3>Suggested Strong Password</h3>
 
-<div class="generated-box">
-
 <p id="generated">{{ suggestion }}</p>
 
 <button onclick="copyPassword()">Copy</button>
-
-</div>
 
 {% endif %}
 
@@ -95,9 +90,72 @@ let text=document.getElementById("generated").innerText;
 
 navigator.clipboard.writeText(text);
 
-alert("Password copied!");
+alert("Password copied");
 
 }
+
+function liveStrength(){
+
+var password=document.getElementById("password").value;
+
+var strength="Weak";
+
+if(password.length>8) strength="Moderate";
+
+if(password.length>12) strength="Strong";
+
+document.getElementById("live-strength").innerHTML="Live Strength: "+strength;
+
+}
+
+
+// MATRIX BACKGROUND
+
+var canvas=document.getElementById("matrix");
+
+var ctx=canvas.getContext("2d");
+
+canvas.height=window.innerHeight;
+
+canvas.width=window.innerWidth;
+
+var letters="01";
+
+letters=letters.split("");
+
+var fontSize=10;
+
+var columns=canvas.width/fontSize;
+
+var drops=[];
+
+for(var x=0;x<columns;x++)
+drops[x]=1;
+
+function draw(){
+
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#0F0";
+ctx.font=fontSize+"px monospace";
+
+for(var i=0;i<drops.length;i++){
+
+var text=letters[Math.floor(Math.random()*letters.length)];
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
+drops[i]=0;
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(draw,33);
 
 </script>
 
