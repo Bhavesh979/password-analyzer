@@ -57,8 +57,19 @@ The tool also generates secure passwords and stores password analysis data using
 ---
 
 ## 📂 Project Structure
-password-analyzer/ │ ├── app.py ├── analyzer.py ├── requirements.txt │ ├── templates/ │   └── index.html │ ├── static/ │   └── style.css │ └── README.md
-Copy code
+password-analyzer/
+│
+├── app.py
+├── analyzer.py
+├── requirements.txt
+│
+├── templates/
+│   └── index.html
+│
+├── static/
+│   └── style.css
+│
+└── README.md
 
 ---
 
