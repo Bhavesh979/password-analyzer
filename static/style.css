@@ -1,5 +1,5 @@
 body{
-font-family: Arial, sans-serif;
+font-family:Arial;
 background:#0f172a;
 color:white;
 text-align:center;
@@ -30,34 +30,17 @@ button:hover{
 background:#16a34a;
 }
 
-ul{
-list-style:none;
-}
-
-.strength-bar{
+.strength-container{
 width:300px;
 height:10px;
-background:#444;
+background:#1e293b;
 margin:10px auto;
-border-radius:5px;
+border-radius:10px;
 }
 
-.strength{
+#strength-bar{
 height:10px;
-border-radius:5px;
-}
-
-.Weak{
-width:33%;
-background:red;
-}
-
-.Moderate{
-width:66%;
-background:orange;
-}
-
-.Strong{
-width:100%;
-background:green;
+width:0%;
+border-radius:10px;
+transition:0.3s;
 }
