@@ -3,40 +3,35 @@ import random
 import string
 
 def check_password_strength(password):
+
     score = 0
     feedback = []
 
-    # Length check
     if len(password) >= 8:
         score += 1
     else:
-        feedback.append("Password should be at least 8 characters long.")
+        feedback.append("Password should be at least 8 characters.")
 
-    # Uppercase check
-    if re.search(r'[A-Z]', password):
+    if re.search("[A-Z]", password):
         score += 1
     else:
-        feedback.append("Add at least one uppercase letter.")
+        feedback.append("Add an uppercase letter.")
 
-    # Lowercase check
-    if re.search(r'[a-z]', password):
+    if re.search("[a-z]", password):
         score += 1
     else:
-        feedback.append("Add at least one lowercase letter.")
+        feedback.append("Add a lowercase letter.")
 
-    # Digit check
-    if re.search(r'\d', password):
+    if re.search("\d", password):
         score += 1
     else:
-        feedback.append("Add at least one digit.")
+        feedback.append("Add a number.")
 
-    # Special character check
-    if re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+    if re.search("[!@#$%^&*(),.?\":{}|<>]", password):
         score += 1
     else:
-        feedback.append("Add at least one special character.")
+        feedback.append("Add a special character.")
 
-    # Strength evaluation
     if score <= 2:
         strength = "Weak"
     elif score <= 4:
@@ -47,6 +42,9 @@ def check_password_strength(password):
     return strength, feedback
 
 
-def generate_strong_password(length=12):
-    characters = string.ascii_letters + string.digits + "!@#$%^&*"
-    return ''.join(random.choice(characters) for _ in range(length))
+def generate_strong_password():
+
+    chars = string.ascii_letters + string.digits + "!@#$%^&*"
+    password = ''.join(random.choice(chars) for _ in range(12))
+
+    return password
