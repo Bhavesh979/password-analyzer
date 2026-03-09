@@ -4,29 +4,34 @@ import os
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET","POST"])
 def home():
 
-    strength = None
-    feedback = []
-    suggestion = None
+    strength=None
+    feedback=[]
+    suggestion=None
+    crack_time=None
+    score=0
 
-    if request.method == "POST":
+    if request.method=="POST":
 
-        password = request.form["password"]
+        password=request.form["password"]
 
-        strength, feedback = analyzer.check_password_strength(password)
+        strength,feedback,score=analyzer.check_password_strength(password)
 
-        suggestion = analyzer.generate_strong_password()
+        crack_time=analyzer.estimate_crack_time(score)
+
+        suggestion=analyzer.generate_strong_password()
 
     return render_template(
         "index.html",
         strength=strength,
         feedback=feedback,
-        suggestion=suggestion
+        suggestion=suggestion,
+        crack_time=crack_time,
+        score=score
     )
 
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+if __name__=="__main__":
+    port=int(os.environ.get("PORT",10000))
+    app.run(host="0.0.0.0",port=port)
