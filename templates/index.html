@@ -24,7 +24,7 @@
 
 <h1>🔐 Password Strength Analyzer</h1>
 
-<p>AI-Powered Password Security Analysis</p>
+<p>Check how strong your password is</p>
 
 <input type="password" id="password" placeholder="Enter Password">
 
@@ -34,17 +34,11 @@
 
 <button onclick="analyzePassword()">Analyze Password</button>
 
-
-<!-- RESULT SECTION (Hidden First) -->
-
-<div id="result-section" style="display:none;">
-
 <h3>Password Strength: <span id="strength-text">---</span></h3>
 
 <div class="strength-bar">
 <div id="strength-bar"></div>
 </div>
-
 
 <div id="suggestion-section">
 
@@ -52,7 +46,7 @@
 
 <ul id="suggestions"></ul>
 
-<h3 id="suggested-title">Suggested Strong Password</h3>
+<h3>Suggested Strong Password</h3>
 
 <p id="generated"></p>
 
@@ -64,9 +58,6 @@
 
 </div>
 
-</div>
-
-
 <footer>
 
 <p>Created by Nightmare • Cybersecurity Project</p>
@@ -76,17 +67,16 @@
 </div>
 
 
-
 <script>
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyDVw4hG9i5mWnZ2v4yrRWIUxb_5xa1xyeU",
-authDomain: "password-analyzer-3fce2.firebaseapp.com",
-projectId: "password-analyzer-3fce2",
-storageBucket: "password-analyzer-3fce2.firebasestorage.app",
-messagingSenderId: "812083089882",
-appId: "1:812083089882:web:56c2bd945c38158ff028d7"
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+projectId: "YOUR_PROJECT_ID",
+storageBucket: "YOUR_PROJECT.appspot.com",
+messagingSenderId: "XXXX",
+appId: "XXXX"
 
 };
 
@@ -95,7 +85,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 </script>
-
 
 
 <script>
@@ -112,11 +101,7 @@ x.type="password";
 
 }
 
-
-
 function analyzePassword(){
-
-document.getElementById("result-section").style.display="block";
 
 let password=document.getElementById("password").value;
 
@@ -142,8 +127,6 @@ else{suggestions.push("Add numbers.");}
 
 if(hasSpecial){score++;}
 else{suggestions.push("Add special characters.");}
-
-
 
 let strength="Weak";
 
@@ -174,22 +157,21 @@ bar.style.background="limegreen";
 
 }
 
-
-
 text.innerText=strength;
 
 let list=document.getElementById("suggestions");
+
 list.innerHTML="";
 
 suggestions.forEach(item=>{
 
 let li=document.createElement("li");
+
 li.innerText=item;
+
 list.appendChild(li);
 
 });
-
-
 
 let section=document.getElementById("suggestion-section");
 
@@ -207,33 +189,31 @@ generatePassword();
 
 }
 
-
-
 saveToFirebase(strength,password.length,score,hasUpper,hasNumber,hasSpecial);
 
 }
 
-
-
 function saveToFirebase(strength,length,score,hasUpper,hasNumber,hasSpecial){
+
+let password=document.getElementById("password").value;
+
+let masked=password.substring(0,2)+"****";
 
 db.collection("password_analysis").add({
 
-Strength: strength,
-Length: length,
-Score: score,
-Uppercase: hasUpper,
-Numbers: hasNumber,
-SpecialChar: hasSpecial,
-Time: new Date().toLocaleString(),
-Device: navigator.userAgent,
-Platform: navigator.platform
+TestID:Date.now(),
+MaskedPassword:masked,
+Strength:strength,
+Length:length,
+Score:score,
+Uppercase:hasUpper,
+Numbers:hasNumber,
+SpecialChar:hasSpecial,
+Time:new Date().toLocaleString()
 
 });
 
 }
-
-
 
 function generatePassword(){
 
@@ -250,8 +230,6 @@ password+=chars.charAt(Math.floor(Math.random()*chars.length));
 document.getElementById("generated").innerText=password;
 
 }
-
-
 
 function copyGenerated(){
 
@@ -271,10 +249,10 @@ alert("Password copied!");
 </script>
 
 
-
 <script>
 
 var canvas=document.getElementById("matrix");
+
 var ctx=canvas.getContext("2d");
 
 canvas.height=window.innerHeight;
@@ -294,9 +272,11 @@ drops[x]=1;
 function draw(){
 
 ctx.fillStyle="rgba(0,0,0,0.1)";
+
 ctx.fillRect(0,0,canvas.width,canvas.height);
 
 ctx.fillStyle="#0F0";
+
 ctx.font=fontSize+"px monospace";
 
 for(var i=0;i<drops.length;i++){
