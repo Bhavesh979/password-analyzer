@@ -2,50 +2,65 @@ import re
 import random
 import string
 
+
 def check_password_strength(password):
 
-    score=0
-    feedback=[]
+    score = 0
+    feedback = []
 
-    if len(password)>=8:
-        score+=1
+    has_upper = bool(re.search(r"[A-Z]", password))
+    has_lower = bool(re.search(r"[a-z]", password))
+    has_number = bool(re.search(r"[0-9]", password))
+    has_special = bool(re.search(r"[!@#$%^&*]", password))
+
+    if len(password) >= 8:
+        score += 1
     else:
         feedback.append("Password must be at least 8 characters.")
 
-    if re.search(r"[A-Z]",password):
-        score+=1
+    if has_upper:
+        score += 1
     else:
-        feedback.append("Add an uppercase letter.")
+        feedback.append("Add uppercase letters.")
 
-    if re.search(r"[a-z]",password):
-        score+=1
+    if has_lower:
+        score += 1
     else:
-        feedback.append("Add a lowercase letter.")
+        feedback.append("Add lowercase letters.")
 
-    if re.search(r"\d",password):
-        score+=1
+    if has_number:
+        score += 1
     else:
-        feedback.append("Add a number.")
+        feedback.append("Add numbers.")
 
-    if re.search(r"[!@#$%^&*]",password):
-        score+=1
+    if has_special:
+        score += 1
     else:
-        feedback.append("Add a special character.")
+        feedback.append("Add special characters.")
 
-    if score<=2:
-        strength="Weak"
-    elif score<=4:
-        strength="Moderate"
+    if score <= 2:
+        strength = "Weak"
+    elif score <= 4:
+        strength = "Moderate"
     else:
-        strength="Strong"
+        strength = "Strong"
 
-    return strength,feedback,score
+    return {
+        "strength": strength,
+        "score": score,
+        "length": len(password),
+        "has_upper": has_upper,
+        "has_lower": has_lower,
+        "has_number": has_number,
+        "has_special": has_special,
+        "feedback": feedback
+    }
 
 
 def generate_strong_password():
 
-    chars=string.ascii_letters+string.digits+"!@#$%^&*"
+    chars = string.ascii_letters + string.digits + "!@#$%^&*"
 
-    password="".join(random.choice(chars) for _ in range(12))
+    password = ''.join(random.choice(chars) for _ in range(12))
 
     return password
